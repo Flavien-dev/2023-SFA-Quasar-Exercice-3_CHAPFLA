@@ -52,6 +52,7 @@ Exercice 3 - Vuex & Formulaires
 export default {
   data () {
     return {
+      // TODO utiliser le getters du magasin pour récupérer les plats
       plats: [
         {
           id: 1,

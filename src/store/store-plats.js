@@ -35,11 +35,23 @@ const state = {
 
 const getters = {
   plats: (state) => {
-    return state.plats
+    return [...state.plats].sort((a, b) => a.nom.localeCompare(b.nom, 'fr'))
+    // TODO retourner un copie et par une référence
+    // TODO les getters servent souvent à filter et trier les données
+    // https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
+    // https://usefulangle.com/post/227/javascript-sort-array-of-objects
+    // https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/String/localeCompare
   }
 }
 
 const mutations = {
+  // TODO Bien commenter les méthodes et fonctions
+  /**
+   * Ajoute le plat au magasin
+   * @param state le magsin
+   * @param plat plat à ajouter
+   */
+  // TODO écrire les mutations en mjuscules ajouterPlat => AJOUTER_PLAT
   ajouterPlat (state, plat) {
     state.plats.push(plat)
   },
