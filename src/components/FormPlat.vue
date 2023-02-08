@@ -81,7 +81,9 @@ export default {
       }
     }
   },
+  // appel des méthodes
   methods: {
+    // appel des actions qui seront utilisées
     ...mapActions('plats', ['ajouterPlat', 'modifierPlat']),
     /**
      * permet de gérer l'envoi du formulaire
