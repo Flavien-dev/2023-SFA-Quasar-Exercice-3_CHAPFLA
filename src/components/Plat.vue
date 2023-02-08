@@ -22,7 +22,8 @@
   </q-card-section>
 
   <q-card-section class="description">
-    {{ plat.description }}
+    <span v-if="plat.description">{{ plat.description }}</span>
+    <i v-else>Aucune description fournie</i>
   </q-card-section>
 
   <q-card-actions
@@ -34,6 +35,7 @@
       color="blue"
       flat>Modifier</q-btn>
     <q-btn
+      @click.stop="confirmerSuppression(plat.id)"
       icon="delete"
       color="red"
       flat>Supprimer</q-btn>
@@ -41,12 +43,17 @@
 
   <q-dialog
     v-model="afficherFormPlat">
-    <form-plat action="modifier" />
+    <form-plat
+      action="modifier"
+      :platAModifier="plat"
+      @close="afficherFormPlat = false"/>
   </q-dialog>
 </q-card>
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
   props: ['plat'],
   data () {
@@ -56,6 +63,23 @@ export default {
   },
   components: {
     'form-plat': require('components/FormPlat.vue').default
+  },
+  methods: {
+    ...mapActions('plats', ['supprimerPlat']),
+    /**
+     * permet de confirmer la suppression d'un plat dans la liste des plats
+     * @param id identifiant du plat en question
+     */
+    confirmerSuppression (id) {
+      this.$q.dialog({
+        title: 'Confirm',
+        message: 'Voulez-vous vraiment supprimer cet élément ?',
+        cancel: true,
+        persistent: true
+      }).onOk(() => {
+        this.supprimerPlat(id)
+      })
+    }
   }
 }
 </script>

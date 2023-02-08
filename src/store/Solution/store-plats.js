@@ -1,5 +1,6 @@
 import { uid } from 'quasar'
 
+// tableau des différents plats
 const state = {
   plats: [
     {
@@ -35,12 +36,15 @@ const state = {
 }
 
 const mutations = {
+  // supprime un plat
   supprimerPlat (state, id) {
     state.plats = state.plats.filter(el => el.id !== id)
   },
+  // ajoute un plat
   ajouterPlat (state, plat) {
     state.plats.push(plat)
   },
+  // modifie un plat
   modifierPlat (state, plat) {
     // Recherche le palt et retourne sa position dans le tableau, son index
     const index = state.plats.findIndex(el => el.id === plat.id)
@@ -54,20 +58,24 @@ const mutations = {
 }
 
 const actions = {
+  // supprime un plat
   supprimerPlat ({ commit }, id) {
     commit('supprimerPlat', id)
   },
+  // ajoute un plat
   ajouterPlat ({ commit }, plat) {
     const newId = uid()
     plat.id = newId
     commit('ajouterPlat', plat)
   },
+  // modifie un plat
   modifierPlat ({ commit }, plat) {
     commit('modifierPlat', plat)
   }
 }
 
 const getters = {
+  // renvoie la liste des plats
   plats: (state) => {
     return state.plats
   }

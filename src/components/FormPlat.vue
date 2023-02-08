@@ -11,7 +11,8 @@
         filled
         v-model="plat.nom"
         label="Nom (Burger)"
-        class="col" />
+        class="col"
+        :rules="[val => val.length < 21 || 'Le nom ne doit ni être vide, ni dépasser 20 caractères']"/>
     </div>
 
     <div class="row q-mb-md">
@@ -20,7 +21,8 @@
         v-model="plat.description"
         label="Description"
         type="textarea"
-        class="col" />
+        class="col"
+        :rules="[val => val.length < 156 || 'La description ne doit ni être vide, ni dépasser 155 caractères']" />
     </div>
 
     <div class="row q-mb-md">
@@ -55,24 +57,58 @@
       color="grey"
       v-close-popup />
     <q-btn
+      @click="formSubmit"
       label="Sauver"
       color="primary"
-      v-close-popup />
+      v-close-popup/>
   </q-card-actions>
 </q-card>
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
-  props: ['action'],
+  props: ['action', 'platAModifier'],
   data () {
     return {
+      // initialiser un nouveau plat
       plat: {
         name: '',
         description: '',
         note: 1,
         image: ''
       }
+    }
+  },
+  methods: {
+    ...mapActions('plats', ['ajouterPlat', 'modifierPlat']),
+    /**
+     * permet de gérer l'envoi du formulaire
+     */
+    formSubmit () {
+      // vérifie si l'action du formulaire est la modification ou l'ajout d'un plat
+      if (this.plat.id) {
+        // récupère les anciennes données
+        const payload = {
+          id: this.plat.id,
+          updates: this.plat
+        }
+        // change les données du plat
+        this.modifierPlat(payload)
+      } else {
+        // ajoute le plat à la page
+        this.ajouterPlat(this.plat)
+      }
+      // ferme le formulaire
+      this.$emit('close')
+    }
+  },
+  mounted () {
+    // vérifie si l'action voulue de l'utilisateur est de modifier un plat
+    if (this.platAModifier) {
+      // Copie les propriétés de platAModifier dans un nouvel objet vide
+      this.plat = Object.assign({}, this.platAModifier)
     }
   }
 }
