@@ -62,6 +62,7 @@ export default {
     }
   },
   components: {
+    // ajoute le formulaire de plat à la page
     'form-plat': require('components/FormPlat.vue').default
   },
   methods: {

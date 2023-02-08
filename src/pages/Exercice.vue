@@ -55,7 +55,6 @@ import { mapGetters } from 'vuex'
 export default {
   data () {
     return {
-      // TODO utiliser le getters du magasin pour récupérer les plats
       afficherFormPlat: false
     }
   },
@@ -64,6 +63,7 @@ export default {
     ...mapGetters('plats', ['plats'])
   },
   components: {
+    // appelle tous les components utiles dans cette vue
     plat: require('components/Plat.vue').default,
     'bouton-ajouter': require('components/BoutonAjouter.vue').default,
     'form-plat': require('components/FormPlat.vue').default

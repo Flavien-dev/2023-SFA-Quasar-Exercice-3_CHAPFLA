@@ -66,6 +66,7 @@
 </template>
 
 <script>
+// importation des actions du magasin
 import { mapActions } from 'vuex'
 
 export default {

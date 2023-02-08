@@ -45,17 +45,21 @@ const getters = {
 }
 
 const mutations = {
-  // TODO Bien commenter les méthodes et fonctions
   /**
    * Ajoute le plat au magasin
    * @param state le magsin
    * @param plat plat à ajouter
    */
-  // TODO écrire les mutations en mjuscules ajouterPlat => AJOUTER_PLAT
-  ajouterPlat (state, plat) {
+  AJOUTER_PLAT (state, plat) {
     state.plats.push(plat)
   },
-  modifierPlat (state, payload) {
+  /**
+   * modifie le plat au magasin
+   * @param state le magasin
+   * @param payload les anciennes données du magasin
+   * @constructor
+   */
+  MODIFIER_PLAT (state, payload) {
     // Recherche le plat et retourne sa position dans le tableau, son index
     const index = state.plats.findIndex(el => el.id === payload.id)
 
@@ -65,16 +69,32 @@ const mutations = {
       Object.assign(state.plats[index], payload.updates)
     }
   },
-  supprimerPlat: (state, id) => {
+  /**
+   * supprime le plat du magasin
+   * @param state le magasin
+   * @param id identifiant du plat à supprimer
+   * @constructor
+   */
+  SUPPRIMER_PLAT: (state, id) => {
     state.plats = state.plats.filter(el => el.id !== id)
   }
 }
 
 const actions = {
+  /**
+   * modifie un plat en changeant ses anciennes données
+   * @param commit action à effectuer
+   * @param payload anciennes données
+   */
   modifierPlat ({ commit }, payload) {
     // Valide la mutation et y passe les données
-    commit('modifierPlat', payload)
+    commit('MODIFIER_PLAT', payload)
   },
+  /**
+   * ajoute un plat à la liste des plats
+   * @param commit action à effectuer
+   * @param plat plat à ajouter
+   */
   ajouterPlat ({ commit }, plat) {
     let uId = 1
     // Si le tableau contient des éléments
@@ -85,10 +105,15 @@ const actions = {
     // Ajoute le nouvel id au plat
     plat.id = uId
     // Commite l'ajout
-    commit('ajouterPlat', plat)
+    commit('AJOUTER_PLAT', plat)
   },
+  /**
+   * supprime le plat en fonction de l'id
+   * @param commit action à effectuer
+   * @param id identifiant du plat
+   */
   supprimerPlat ({ commit }, id) {
-    commit('supprimerPlat', id)
+    commit('SUPPRIMER_PLAT', id)
   }
 }
 
