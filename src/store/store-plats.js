@@ -1,5 +1,6 @@
 // State : données du magasin
 const state = {
+
   plats: [
     {
       id: 1,
